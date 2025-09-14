@@ -9,11 +9,8 @@ namespace CabApp.Core.Implementation.MenuActions
 {
     public class ExitMenuAction: IMenuAction
     {
-        private readonly IMenuCoordinator _menuCoordinator;
-
-        public ExitMenuAction(IMenuCoordinator menuCoordinator)
+        public ExitMenuAction()
         {
-            _menuCoordinator = menuCoordinator;
         }
 
         public string Title => "Exit";
@@ -25,7 +22,7 @@ namespace CabApp.Core.Implementation.MenuActions
         {
             Console.Clear();
             Console.WriteLine("Exiting the Cab Management System.");
-            _menuCoordinator.StopApplication();
+            Environment.Exit(0);
             await Task.CompletedTask;
             return true;
         }

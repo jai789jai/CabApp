@@ -10,10 +10,10 @@ namespace CabApp.Core.DataModel
     {
         public CabDetails() { }
         public int Id { get; set; }
-        public CarInfo CarInfo { get; set; } = new CarInfo();   
+        public int CarId { get; set; }
         public WorkState CurrentWorkState { get; set; }
-        public int TotalTripsCount { get { return ComppletedTrips.Count; } }
-        public List<TripDetail> ComppletedTrips { get; set; } = new List<TripDetail>();
-        public DriverInfo DriverInfo { get; set; } = new DriverInfo();
+        public int TotalTripsCount { get { return ComppletedTrips.Count; } set { /* Ignore setter, this is computed */ } }
+        public List<int> ComppletedTrips { get; set; } = new List<int>(); 
+        public int DriverId { get; set; }
     }
 }

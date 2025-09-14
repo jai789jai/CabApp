@@ -2,6 +2,9 @@
 using CabApp.Core.Implementation;
 using CabApp.Core.Implementation.MenuActions;
 using CabApp.Core.Implementation.MenuActions.Cabs;
+using CabApp.Core.Implementation.MenuActions.Cars;
+using CabApp.Core.Implementation.MenuActions.Drivers;
+using CabApp.Core.Implementation.MenuActions.Trips;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -24,6 +27,9 @@ namespace CabApp
                     InfraRegistration(services);
                     MenuRegistration(services);
                     CabMenuRegistration(services);
+                    CarMenuRegistration(services);
+                    DriverMenuRegistration(services);
+                    TripMenuRegistration(services);
                     services.AddSingleton<App>();
                     services.AddTransient<ExitMenuAction>();
                 });
@@ -51,6 +57,36 @@ namespace CabApp
         {
             services.AddTransient<CabMenuAction>();
             services.AddTransient<ViewCabsMenuAction>();
+            services.AddTransient<AddCabMenuAction>();
+            services.AddTransient<UpdateCabMenuAction>();
+            services.AddTransient<RemoveCabMenuAction>();
+        }
+
+        private static void CarMenuRegistration(IServiceCollection services)
+        {
+            services.AddTransient<CarMenuAction>();
+            services.AddTransient<ViewCarsMenuAction>();
+            services.AddTransient<AddCarMenuAction>();
+            services.AddTransient<UpdateCarMenuAction>();
+            services.AddTransient<RemoveCarMenuAction>();
+        }
+
+        private static void DriverMenuRegistration(IServiceCollection services)
+        {
+            services.AddTransient<DriverMenuAction>();
+            services.AddTransient<ViewDriversMenuAction>();
+            services.AddTransient<AddDriverMenuAction>();
+            services.AddTransient<UpdateDriverMenuAction>();
+            services.AddTransient<RemoveDriverMenuAction>();
+        }
+
+        private static void TripMenuRegistration(IServiceCollection services)
+        {
+            services.AddTransient<TripMenuAction>();
+            services.AddTransient<ViewTripsMenuAction>();
+            services.AddTransient<AddTripMenuAction>();
+            services.AddTransient<UpdateTripMenuAction>();
+            services.AddTransient<RemoveTripMenuAction>();
         }
     }
 }

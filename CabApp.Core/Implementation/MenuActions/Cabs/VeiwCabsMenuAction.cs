@@ -1,4 +1,5 @@
 ﻿using CabApp.Core.Abstraction;
+using CabApp.Core.DataModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -38,13 +39,21 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 Console.WriteLine("===================================");
                 if (cabs != null && cabs.Count > 0)
                 {
+                    // Get related data
+                    var cars = await _dataService.GetAllCarsAsync();
+                    var drivers = await _dataService.GetAllDriversAsync();
+                    
                     foreach (var cab in cabs)
                     {
+                        var car = cars.FirstOrDefault(c => c.CarId == cab.CarId);
+                        var driver = drivers.FirstOrDefault(d => d.EmpId == cab.DriverId);
+                        
                         StringBuilder sb = new StringBuilder();
                         sb.Append($"ID: {cab.Id}").Append(", ");
-                        sb.Append($"Model: {cab.CarInfo.ModelName}").Append(", ");
-                        sb.Append($"CompletedTrips: {cab.ComppletedTrips}").Append(", ");
-                        sb.Append($"WorkState: {cab.CurrentWorkState.ToString()}");
+                        sb.Append($"Car: {car?.ModelName ?? "Unknown"}").Append(", ");
+                        sb.Append($"Driver: {driver?.FirstName ?? "Unknown"} {driver?.LastName ?? ""}").Append(", ");
+                        sb.Append($"WorkState: {cab.CurrentWorkState.ToString()}").Append(", ");
+                        sb.Append($"Trips: {cab.ComppletedTrips?.Count ?? 0}");
 
                         Console.WriteLine(sb.ToString());
                     }
@@ -53,7 +62,6 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 {
                     Console.WriteLine("No cabs available in the system.");
                 }
-                await _menuService.WaitForUserAsync();
             }
             catch(Exception ex)
             {
