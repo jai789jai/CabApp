@@ -11,7 +11,7 @@ namespace CabApp.Core.DataModel
         public CabDetails() 
         { 
             CurrentWorkState = WorkState.IDLE;
-            LastIdleTime = DateTime.UtcNow;
+            IdleStartTime = DateTime.UtcNow;
         }
         
         public int Id { get; set; }
@@ -22,14 +22,14 @@ namespace CabApp.Core.DataModel
         public int DriverId { get; set; }
         
         public int CurrentLocationId { get; set; }
-        public DateTime LastIdleTime { get; set; }
+        public DateTime IdleStartTime { get; set; }
         public int? CurrentTripId { get; set; } 
         
         public TimeSpan GetIdleDuration()
         {
             if (CurrentWorkState == WorkState.IDLE)
             {
-                return DateTime.UtcNow - LastIdleTime;
+                return DateTime.UtcNow - IdleStartTime;
             }
             return TimeSpan.Zero;
         }

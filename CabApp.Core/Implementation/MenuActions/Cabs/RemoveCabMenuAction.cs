@@ -45,7 +45,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                     return true;
                 }
 
-                Console.Write("\nEnter the ID of the cab to delete: ");
+                Console.Write("Enter the ID of the cab to delete: ");
                 if (int.TryParse(Console.ReadLine(), out int cabId))
                 {
                     // Confirm deletion
@@ -58,7 +58,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                         var car = cars.FirstOrDefault(c => c.CarId == cabToDelete.CarId);
                         var driver = drivers.FirstOrDefault(d => d.EmpId == cabToDelete.DriverId);
 
-                        Console.WriteLine($"\nAre you sure you want to delete cab ID {cabId}?");
+                        Console.WriteLine($"Are you sure you want to delete cab ID {cabId}?");
                         Console.WriteLine($"Car: {car?.ModelName ?? "Unknown"} (ID: {cabToDelete.CarId})");
                         Console.WriteLine($"Driver: {driver?.FirstName ?? "Unknown"} {driver?.LastName ?? ""} (ID: {cabToDelete.DriverId})");
                         Console.WriteLine($"Work State: {cabToDelete.CurrentWorkState}");
@@ -70,26 +70,26 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                             bool success = await _dataService.RemoveCabAsync(cabId);
                             if (success)
                             {
-                                Console.WriteLine($"\nCab with ID {cabId} has been successfully deleted.");
+                                Console.WriteLine($"Cab with ID {cabId} has been successfully deleted.");
                             }
                             else
                             {
-                                Console.WriteLine($"\nFailed to delete cab with ID {cabId}.");
+                                Console.WriteLine($"Failed to delete cab with ID {cabId}.");
                             }
                         }
                         else
                         {
-                            Console.WriteLine("\nDeletion cancelled.");
+                            Console.WriteLine("Deletion cancelled.");
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"\nCab with ID {cabId} not found.");
+                        Console.WriteLine($"Cab with ID {cabId} not found.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("\nInvalid cab ID entered.");
+                    Console.WriteLine("Invalid cab ID entered.");
                 }
 
                 return true;

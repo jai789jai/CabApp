@@ -28,7 +28,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
         {
             try
             {
-                Console.WriteLine("\n=== Change Cab State ===");
+                Console.WriteLine("=== Change Cab State ===");
 
                 // Display all cabs
                 var cabs = await _dataService.GetAllCabsAsync();
@@ -38,7 +38,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                     return false;
                 }
 
-                Console.WriteLine("\nAvailable Cabs:");
+                Console.WriteLine("Available Cabs:");
                 foreach (var cab in cabs)
                 {
                     var location = await _dataService.GetLocationByIdAsync(cab.CurrentLocationId);
@@ -47,7 +47,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 }
 
                 // Get cab ID from user
-                Console.Write("\nEnter Cab ID to change state: ");
+                Console.Write("Enter Cab ID to change state: ");
                 if (!int.TryParse(Console.ReadLine(), out int cabId))
                 {
                     Console.WriteLine("Invalid cab ID.");
@@ -62,7 +62,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 }
 
                 // Display available states
-                Console.WriteLine("\nAvailable States:");
+                Console.WriteLine("Available States:");
                 var states = Enum.GetValues<WorkState>();
                 for (int i = 0; i < states.Length; i++)
                 {
@@ -70,7 +70,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 }
 
                 // Get new state from user
-                Console.Write($"\nEnter new state (1-{states.Length}): ");
+                Console.Write($"Enter new state (1-{states.Length}): ");
                 if (!int.TryParse(Console.ReadLine(), out int stateChoice) || 
                     stateChoice < 1 || stateChoice > states.Length)
                 {
@@ -79,13 +79,6 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 }
 
                 var newState = states[stateChoice - 1];
-
-                // Validate state transition
-                if (!IsValidStateTransition(selectedCab.CurrentWorkState, newState))
-                {
-                    Console.WriteLine($"Invalid state transition from {selectedCab.CurrentWorkState} to {newState}.");
-                    return false;
-                }
 
                 // Change the cab state
                 var success = await _dataService.ChangeCabStateAsync(cabId, newState);
@@ -105,18 +98,6 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 return false;
             }
             return true;
-        }
-
-        private bool IsValidStateTransition(WorkState currentState, WorkState newState)
-        {
-            // Define valid state transitions
-            return currentState switch
-            {
-                WorkState.IDLE => newState == WorkState.ON_TRIP || newState == WorkState.GROUNDED,
-                WorkState.ON_TRIP => newState == WorkState.IDLE || newState == WorkState.GROUNDED,
-                WorkState.GROUNDED => newState == WorkState.IDLE,
-                _ => false
-            };
         }
     }
 }

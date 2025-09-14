@@ -45,13 +45,13 @@ namespace CabApp.Core.Implementation.MenuActions.Drivers
                     return true;
                 }
 
-                Console.Write("\nEnter the ID of the driver to remove: ");
+                Console.Write("Enter the ID of the driver to remove: ");
                 if (int.TryParse(Console.ReadLine(), out int driverId))
                 {
                     var driverToRemove = drivers.FirstOrDefault(d => d.EmpId == driverId);
                     if (driverToRemove != null)
                     {
-                        Console.WriteLine($"\nAre you sure you want to remove driver ID {driverId}?");
+                        Console.WriteLine($"Are you sure you want to remove driver ID {driverId}?");
                         Console.WriteLine($"Name: {driverToRemove.FirstName} {driverToRemove.LastName}");
                         Console.WriteLine($"License: {driverToRemove.LicenseNumber}");
                         Console.Write("Type 'YES' to confirm removal: ");
@@ -62,26 +62,26 @@ namespace CabApp.Core.Implementation.MenuActions.Drivers
                             bool success = await _dataService.RemoveDriverAsync(driverId);
                             if (success)
                             {
-                                Console.WriteLine($"\nDriver with ID {driverId} has been successfully removed.");
+                                Console.WriteLine($"Driver with ID {driverId} has been successfully removed.");
                             }
                             else
                             {
-                                Console.WriteLine($"\nFailed to remove driver with ID {driverId}.");
+                                Console.WriteLine($"Failed to remove driver with ID {driverId}.");
                             }
                         }
                         else
                         {
-                            Console.WriteLine("\nRemoval cancelled.");
+                            Console.WriteLine("Removal cancelled.");
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"\nDriver with ID {driverId} not found.");
+                        Console.WriteLine($"Driver with ID {driverId} not found.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("\nInvalid driver ID entered.");
+                    Console.WriteLine("Invalid driver ID entered.");
                 }
 
                 return true;

@@ -28,7 +28,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
         {
             try
             {
-                Console.WriteLine("\n=== Change Cab Location ===");
+                Console.WriteLine("=== Change Cab Location ===");
 
                 // Display all cabs
                 var cabs = await _dataService.GetAllCabsAsync();
@@ -38,7 +38,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                     return false;
                 }
 
-                Console.WriteLine("\nAvailable Cabs:");
+                Console.WriteLine("Available Cabs:");
                 foreach (var cab in cabs)
                 {
                     var location = await _dataService.GetLocationByIdAsync(cab.CurrentLocationId);
@@ -47,7 +47,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 }
 
                 // Get cab ID from user
-                Console.Write("\nEnter Cab ID to change location: ");
+                Console.Write("Enter Cab ID to change location: ");
                 if (!int.TryParse(Console.ReadLine(), out int cabId))
                 {
                     Console.WriteLine("Invalid cab ID.");
@@ -69,14 +69,14 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                     return false;
                 }
 
-                Console.WriteLine("\nAvailable Locations:");
+                Console.WriteLine("Available Locations:");
                 foreach (var location in locations)
                 {
                     Console.WriteLine($"ID: {location.Id}, City: {location.City}, Country: {location.Country}");
                 }
 
                 // Get new location ID from user
-                Console.Write("\nEnter New Location ID: ");
+                Console.Write("Enter New Location ID: ");
                 if (!int.TryParse(Console.ReadLine(), out int newLocationId))
                 {
                     Console.WriteLine("Invalid location ID.");

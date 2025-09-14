@@ -46,13 +46,13 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                     return true;
                 }
 
-                Console.Write("\nEnter the ID of the cab to update: ");
+                Console.Write("Enter the ID of the cab to update: ");
                 if (int.TryParse(Console.ReadLine(), out int cabId))
                 {
                     var existingCab = await _dataService.GetCabByIdAsync(cabId);
                     if (existingCab != null)
                     {
-                        Console.WriteLine($"\nUpdating Cab ID: {existingCab.Id}");
+                        Console.WriteLine($"Updating Cab ID: {existingCab.Id}");
                         Console.WriteLine("===================================");
 
                         // Get related data for display
@@ -62,13 +62,13 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                         var currentDriver = drivers.FirstOrDefault(d => d.EmpId == existingCab.DriverId);
 
                         // Display current information
-                        Console.WriteLine("\nCurrent Information:");
+                        Console.WriteLine("Current Information:");
                         Console.WriteLine($"Car: {currentCar?.ModelName ?? "Unknown"} (ID: {existingCab.CarId})");
                         Console.WriteLine($"Driver: {currentDriver?.FirstName ?? "Unknown"} {currentDriver?.LastName ?? ""} (ID: {existingCab.DriverId})");
                         Console.WriteLine($"Work State: {existingCab.CurrentWorkState}");
 
                         // Update Car Assignment
-                        Console.WriteLine("\n--- Available Cars ---");
+                        Console.WriteLine("--- Available Cars ---");
                         foreach (var car in cars)
                         {
                             Console.WriteLine($"ID: {car.CarId} - {car.ManufactureName} {car.ModelName}");
@@ -85,7 +85,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                         }
 
                         // Update Driver Assignment
-                        Console.WriteLine("\n--- Available Drivers ---");
+                        Console.WriteLine("--- Available Drivers ---");
                         foreach (var driver in drivers)
                         {
                             Console.WriteLine($"ID: {driver.EmpId} - {driver.FirstName} {driver.LastName}");
@@ -102,7 +102,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                         }
 
                         // Update Work State
-                        Console.WriteLine("\n--- Update Work State ---");
+                        Console.WriteLine("--- Update Work State ---");
                         Console.WriteLine("1. IDLE");
                         Console.WriteLine("2. ON_TRIP");
                         Console.WriteLine("3. GROUNDED");
@@ -128,21 +128,21 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                         bool success = await _dataService.UpdateCabAsync(existingCab);
                         if (success)
                         {
-                            Console.WriteLine($"\nCab with ID {cabId} has been successfully updated.");
+                            Console.WriteLine($"Cab with ID {cabId} has been successfully updated.");
                         }
                         else
                         {
-                            Console.WriteLine($"\nFailed to update cab with ID {cabId}.");
+                            Console.WriteLine($"Failed to update cab with ID {cabId}.");
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"\nCab with ID {cabId} not found.");
+                        Console.WriteLine($"Cab with ID {cabId} not found.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("\nInvalid cab ID entered.");
+                    Console.WriteLine("Invalid cab ID entered.");
                 }
 
                 return true;

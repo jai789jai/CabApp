@@ -28,7 +28,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
         {
             try
             {
-                Console.WriteLine("\n=== Complete Trip ===");
+                Console.WriteLine("=== Complete Trip ===");
 
                 // Display active trips
                 var allTrips = await _dataService.GetAllTripsAsync();
@@ -40,7 +40,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                     return false;
                 }
 
-                Console.WriteLine("\nActive Trips:");
+                Console.WriteLine("Active Trips:");
                 foreach (var trip in activeTrips)
                 {
                     var cab = await _dataService.GetCabByIdAsync(trip.AssignedCabId.Value);
@@ -50,7 +50,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 }
 
                 // Get trip ID from user
-                Console.Write("\nEnter Trip ID to complete: ");
+                Console.Write("Enter Trip ID to complete: ");
                 if (!int.TryParse(Console.ReadLine(), out int tripId))
                 {
                     Console.WriteLine("Invalid trip ID.");
@@ -81,7 +81,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 if (success)
                 {
                     var cab = await _dataService.GetCabByIdAsync(selectedTrip.AssignedCabId.Value);
-                    Console.WriteLine($"\n✅ Trip completed successfully!");
+                    Console.WriteLine($"Trip completed successfully!");
                     Console.WriteLine($"Trip ID: {tripId}");
                     Console.WriteLine($"Cab ID: {selectedTrip.AssignedCabId}");
                     Console.WriteLine($"From: {selectedTrip.FromLocation.City}");

@@ -36,7 +36,7 @@ namespace CabApp.Core.Implementation.MenuActions.Locations
                 Console.WriteLine("===================================");
 
                 // Show available locations
-                Console.WriteLine("\n--- Available Locations ---");
+                Console.WriteLine("--- Available Locations ---");
                 var locations = await _dataService.GetAllLocationsAsync();
                 if (locations != null && locations.Count > 0)
                 {
@@ -51,19 +51,19 @@ namespace CabApp.Core.Implementation.MenuActions.Locations
                     return false;
                 }
 
-                Console.Write("\nEnter Location ID to update: ");
+                Console.Write("Enter Location ID to update: ");
                 if (int.TryParse(Console.ReadLine(), out int locationId))
                 {
                     var existingLocation = await _dataService.GetLocationByIdAsync(locationId);
                     if (existingLocation != null)
                     {
-                        Console.WriteLine($"\nCurrent details:");
+                        Console.WriteLine($"Current details:");
                         Console.WriteLine($"City: {existingLocation.City}");
                         Console.WriteLine($"Country: {existingLocation.Country}");
                         Console.WriteLine($"Latitude: {existingLocation.Latitude}");
                         Console.WriteLine($"Longitude: {existingLocation.Longitude}");
 
-                        Console.WriteLine("\nEnter new details (press Enter to keep current value):");
+                        Console.WriteLine("Enter new details (press Enter to keep current value):");
 
                         Console.Write($"New City [{existingLocation.City}]: ");
                         var newCity = Console.ReadLine();
@@ -98,11 +98,11 @@ namespace CabApp.Core.Implementation.MenuActions.Locations
                         
                         if (success)
                         {
-                            Console.WriteLine($"\nLocation updated successfully!");
+                            Console.WriteLine($"Location updated successfully!");
                         }
                         else
                         {
-                            Console.WriteLine("\nFailed to update location. Please try again.");
+                            Console.WriteLine("Failed to update location. Please try again.");
                         }
 
                         return success;

@@ -77,11 +77,11 @@ namespace CabApp.Core.Implementation.MenuActions.Drivers
                 
                 if (success)
                 {
-                    Console.WriteLine($"\nDriver added successfully with ID: {driver.EmpId}");
+                    Console.WriteLine($"Driver added successfully with ID: {driver.EmpId}");
                 }
                 else
                 {
-                    Console.WriteLine("\nFailed to add driver. Please try again.");
+                    Console.WriteLine("Failed to add driver. Please try again.");
                 }
 
                 return success;

@@ -38,7 +38,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 var cab = new CabDetails();
 
                 // Show available cars
-                Console.WriteLine("\n--- Available Cars ---");
+                Console.WriteLine("--- Available Cars ---");
                 var cars = await _dataService.GetAllCarsAsync();
                 if (cars != null && cars.Count > 0)
                 {
@@ -53,7 +53,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                     return false;
                 }
 
-                Console.Write("\nEnter Car ID: ");
+                Console.Write("Enter Car ID: ");
                 if (int.TryParse(Console.ReadLine(), out int carId))
                 {
                     var selectedCar = await _dataService.GetCarByIdAsync(carId);
@@ -74,7 +74,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 }
 
                 // Show available drivers
-                Console.WriteLine("\n--- Available Drivers ---");
+                Console.WriteLine("--- Available Drivers ---");
                 var drivers = await _dataService.GetAllDriversAsync();
                 if (drivers != null && drivers.Count > 0)
                 {
@@ -89,7 +89,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                     return false;
                 }
 
-                Console.Write("\nEnter Driver ID: ");
+                Console.Write("Enter Driver ID: ");
                 if (int.TryParse(Console.ReadLine(), out int driverId))
                 {
                     var selectedDriver = await _dataService.GetDriverByIdAsync(driverId);
@@ -110,7 +110,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 }
 
                 // Show available locations
-                Console.WriteLine("\n--- Available Locations ---");
+                Console.WriteLine("--- Available Locations ---");
                 var locations = await _dataService.GetAllLocationsAsync();
                 if (locations != null && locations.Count > 0)
                 {
@@ -125,7 +125,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                     return false;
                 }
 
-                Console.Write("\nEnter Location ID: ");
+                Console.Write("Enter Location ID: ");
                 if (int.TryParse(Console.ReadLine(), out int locationId))
                 {
                     var selectedLocation = await _dataService.GetLocationByIdAsync(locationId);
@@ -147,7 +147,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
 
                 // Set default work state and initialize tracking
                 cab.CurrentWorkState = WorkState.IDLE;
-                cab.LastIdleTime = DateTime.UtcNow;
+                cab.IdleStartTime = DateTime.UtcNow;
                 cab.ComppletedTrips = new List<int>();
 
                 // Add cab to system
@@ -155,11 +155,11 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 
                 if (success)
                 {
-                    Console.WriteLine($"\nCab registered successfully with ID: {cab.Id}");
+                    Console.WriteLine($"Cab registered successfully with ID: {cab.Id}");
                 }
                 else
                 {
-                    Console.WriteLine("\nFailed to register cab. Please try again.");
+                    Console.WriteLine("Failed to register cab. Please try again.");
                 }
 
                 return success;
