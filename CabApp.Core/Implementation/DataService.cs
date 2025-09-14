@@ -39,7 +39,6 @@ namespace CabApp.Core.Implementation
             {
                 var cabs = await GetAllCabsAsync();
                 
-                // Generate new ID if not provided
                 if (cab.Id == 0)
                 {
                     cab.Id = cabs.Count > 0 ? cabs.Max(c => c.Id) + 1 : 1;

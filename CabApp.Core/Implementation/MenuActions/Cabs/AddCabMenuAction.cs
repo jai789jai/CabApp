@@ -121,7 +121,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 }
                 else
                 {
-                    Console.WriteLine("No locations available. Please add locations first.");
+                    Console.WriteLine("No locations available. Please add locations first through the Location Management menu.");
                     return false;
                 }
 

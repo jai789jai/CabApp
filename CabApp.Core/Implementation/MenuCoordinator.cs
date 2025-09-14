@@ -4,7 +4,6 @@ using CabApp.Core.Implementation.MenuActions.Cabs;
 using CabApp.Core.Implementation.MenuActions.Cars;
 using CabApp.Core.Implementation.MenuActions.Drivers;
 using CabApp.Core.Implementation.MenuActions.Locations;
-using CabApp.Core.Implementation.MenuActions.Trips;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -98,7 +97,6 @@ namespace CabApp.Core.Implementation
                 "cab" => CreateCabMenuAction(),
                 "car" => CreateCarMenuAction(),
                 "driver" => CreateDriverMenuAction(),
-                "trip" => CreateTripMenuAction(),
                 "location" => CreateLocationMenuAction(),
                 _ => CreateMainMenuAction(),
             };
@@ -111,7 +109,6 @@ namespace CabApp.Core.Implementation
                 _serviceProvider.GetRequiredService<CabMenuAction>(),
                 _serviceProvider.GetRequiredService<CarMenuAction>(),
                 _serviceProvider.GetRequiredService<DriverMenuAction>(),
-                _serviceProvider.GetRequiredService<TripMenuAction>(),
                 _serviceProvider.GetRequiredService<LocationMenuAction>(),
                 _serviceProvider.GetRequiredService<ExitMenuAction>(),
             };
@@ -151,17 +148,6 @@ namespace CabApp.Core.Implementation
                 _serviceProvider.GetRequiredService<AddDriverMenuAction>(),
                 _serviceProvider.GetRequiredService<UpdateDriverMenuAction>(),
                 _serviceProvider.GetRequiredService<RemoveDriverMenuAction>(),
-            };
-        }
-
-        private List<IMenuAction> CreateTripMenuAction()
-        {
-            return new List<IMenuAction>
-            {
-                _serviceProvider.GetRequiredService<ViewTripsMenuAction>(),
-                _serviceProvider.GetRequiredService<AddTripMenuAction>(),
-                _serviceProvider.GetRequiredService<UpdateTripMenuAction>(),
-                _serviceProvider.GetRequiredService<RemoveTripMenuAction>(),
             };
         }
 
