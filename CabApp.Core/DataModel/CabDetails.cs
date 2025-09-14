@@ -17,16 +17,14 @@ namespace CabApp.Core.DataModel
         public int Id { get; set; }
         public int CarId { get; set; }
         public WorkState CurrentWorkState { get; set; }
-        public int TotalTripsCount { get { return ComppletedTrips.Count; } set { /* Ignore setter, this is computed */ } }
+        public int TotalTripsCount { get { return ComppletedTrips.Count; } set { } }
         public List<int> ComppletedTrips { get; set; } = new List<int>(); 
         public int DriverId { get; set; }
         
-        // New properties for location and idle time tracking
         public int CurrentLocationId { get; set; }
         public DateTime LastIdleTime { get; set; }
-        public int? CurrentTripId { get; set; } // Null when idle, contains trip ID when on trip
+        public int? CurrentTripId { get; set; } 
         
-        // Helper method to calculate idle duration
         public TimeSpan GetIdleDuration()
         {
             if (CurrentWorkState == WorkState.IDLE)
