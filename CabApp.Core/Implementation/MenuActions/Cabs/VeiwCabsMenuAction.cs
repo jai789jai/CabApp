@@ -42,18 +42,34 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                     // Get related data
                     var cars = await _dataService.GetAllCarsAsync();
                     var drivers = await _dataService.GetAllDriversAsync();
+                    var locations = await _dataService.GetAllLocationsAsync();
                     
                     foreach (var cab in cabs)
                     {
                         var car = cars.FirstOrDefault(c => c.CarId == cab.CarId);
                         var driver = drivers.FirstOrDefault(d => d.EmpId == cab.DriverId);
+                        var location = locations.FirstOrDefault(l => l.Id == cab.CurrentLocationId);
                         
                         StringBuilder sb = new StringBuilder();
                         sb.Append($"ID: {cab.Id}").Append(", ");
                         sb.Append($"Car: {car?.ModelName ?? "Unknown"}").Append(", ");
                         sb.Append($"Driver: {driver?.FirstName ?? "Unknown"} {driver?.LastName ?? ""}").Append(", ");
-                        sb.Append($"WorkState: {cab.CurrentWorkState.ToString()}").Append(", ");
+                        sb.Append($"Location: {location?.City ?? "Unknown"}").Append(", ");
+                        sb.Append($"State: {cab.CurrentWorkState.ToString()}").Append(", ");
                         sb.Append($"Trips: {cab.ComppletedTrips?.Count ?? 0}");
+                        
+                        // Show idle time if cab is idle
+                        if (cab.CurrentWorkState == WorkState.IDLE)
+                        {
+                            var idleDuration = cab.GetIdleDuration();
+                            sb.Append($", Idle: {idleDuration.TotalMinutes:F1} min");
+                        }
+                        
+                        // Show current trip if on trip
+                        if (cab.CurrentWorkState == WorkState.ON_TRIP && cab.CurrentTripId.HasValue)
+                        {
+                            sb.Append($", Trip: {cab.CurrentTripId}");
+                        }
 
                         Console.WriteLine(sb.ToString());
                     }

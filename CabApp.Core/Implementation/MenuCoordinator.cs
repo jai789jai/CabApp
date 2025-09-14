@@ -125,6 +125,10 @@ namespace CabApp.Core.Implementation
                 _serviceProvider.GetRequiredService<AddCabMenuAction>(),
                 _serviceProvider.GetRequiredService<UpdateCabMenuAction>(),
                 _serviceProvider.GetRequiredService<RemoveCabMenuAction>(),
+                _serviceProvider.GetRequiredService<ChangeCabLocationMenuAction>(),
+                _serviceProvider.GetRequiredService<ChangeCabStateMenuAction>(),
+                _serviceProvider.GetRequiredService<BookCabMenuAction>(),
+                _serviceProvider.GetRequiredService<CompleteTripMenuAction>(),
             };
         }
 

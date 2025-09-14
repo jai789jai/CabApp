@@ -109,8 +109,45 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                     return false;
                 }
 
-                // Set default work state
+                // Show available locations
+                Console.WriteLine("\n--- Available Locations ---");
+                var locations = await _dataService.GetAllLocationsAsync();
+                if (locations != null && locations.Count > 0)
+                {
+                    foreach (var location in locations)
+                    {
+                        Console.WriteLine($"ID: {location.Id} - {location.City}, {location.Country}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No locations available. Please add locations first.");
+                    return false;
+                }
+
+                Console.Write("\nEnter Location ID: ");
+                if (int.TryParse(Console.ReadLine(), out int locationId))
+                {
+                    var selectedLocation = await _dataService.GetLocationByIdAsync(locationId);
+                    if (selectedLocation != null)
+                    {
+                        cab.CurrentLocationId = locationId;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Location ID selected.");
+                        return false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Location ID entered.");
+                    return false;
+                }
+
+                // Set default work state and initialize tracking
                 cab.CurrentWorkState = WorkState.IDLE;
+                cab.LastIdleTime = DateTime.UtcNow;
                 cab.ComppletedTrips = new List<int>();
 
                 // Add cab to system
