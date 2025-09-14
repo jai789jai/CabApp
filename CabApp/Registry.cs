@@ -62,6 +62,10 @@ namespace CabApp
             services.AddTransient<AddCabMenuAction>();
             services.AddTransient<UpdateCabMenuAction>();
             services.AddTransient<RemoveCabMenuAction>();
+            services.AddTransient<ChangeCabLocationMenuAction>();
+            services.AddTransient<ChangeCabStateMenuAction>();
+            services.AddTransient<BookCabMenuAction>();
+            services.AddTransient<CompleteTripMenuAction>();
         }
 
         private static void CarMenuRegistration(IServiceCollection services)

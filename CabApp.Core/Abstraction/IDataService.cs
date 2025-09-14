@@ -43,5 +43,12 @@ namespace CabApp.Core.Abstraction
         Task<bool> UpdateLocationAsync(LocationDetail location);
         Task<bool> RemoveLocationAsync(int locationId);
         Task<LocationDetail?> GetLocationByIdAsync(int locationId);
+        
+        // Cab management operations
+        Task<bool> ChangeCabLocationAsync(int cabId, int newLocationId);
+        Task<bool> ChangeCabStateAsync(int cabId, WorkState newState);
+        Task<List<CabDetails>> GetAvailableCabsAtLocationAsync(int locationId);
+        Task<CabDetails?> BookCabForTripAsync(int tripId, int fromLocationId);
+        Task<bool> CompleteTripAsync(int tripId);
     }
 }
