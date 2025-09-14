@@ -10,18 +10,20 @@ namespace CabApp
     public class App
     {
         private readonly IAppLogger _appLogger;
-
-        public App(IAppLogger appLogger)
+        private readonly IMenuCoordinator _menuCoordinator;
+        public App(IAppLogger appLogger, IMenuCoordinator menuCoordinator)
         {
             _appLogger = appLogger;
+            _menuCoordinator = menuCoordinator;
         }
 
-        public void Run(string[] args)
+        public async Task Run(string[] args)
         {
             try
             {
                 _appLogger.LogInfo("Application Started");
-                Console.WriteLine("Hello from the other Side.");
+                //Console.WriteLine("Hello from the other Side.");
+                await _menuCoordinator.ShowMenuAsync("main");
 
             }
             catch(Exception ex)

@@ -1,5 +1,7 @@
 ﻿using CabApp.Core.Abstraction;
 using CabApp.Core.Implementation;
+using CabApp.Core.Implementation.MenuActions;
+using CabApp.Core.Implementation.MenuActions.Cabs;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -19,15 +21,36 @@ namespace CabApp
                 .ConfigureServices((hostContext, services) =>
                 {
                     // Services Registration
-                    services.AddSingleton<IAppLogger, AppLogger>();
+                    InfraRegistration(services);
+                    MenuRegistration(services);
+                    CabMenuRegistration(services);
                     services.AddSingleton<App>();
-                    services.AddSingleton<IDataStore, DataStore>(provider =>
-                    {
-                        var logger = provider.GetService<IAppLogger>();
-                        var dataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data");
-                        return new DataStore(dataDirectory, logger!);
-                    });
+                    services.AddTransient<ExitMenuAction>();
                 });
+        }
+
+        private static void MenuRegistration(IServiceCollection services)
+        {
+            services.AddSingleton<IMenuService, MenuService>();
+            services.AddSingleton<IMenuCoordinator, MenuCoordinator>();
+        }
+
+        private static void InfraRegistration(IServiceCollection services)
+        {
+            services.AddSingleton<IAppLogger, AppLogger>();
+            services.AddSingleton<IDataService, DataService>();
+            services.AddSingleton<IDataStore, DataStore>(provider =>
+            {
+                var logger = provider.GetService<IAppLogger>();
+                var dataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data");
+                return new DataStore(dataDirectory, logger!);
+            });
+        }
+
+        private static void CabMenuRegistration(IServiceCollection services)
+        {
+            services.AddTransient<CabMenuAction>();
+            services.AddTransient<ViewCabsMenuAction>();
         }
     }
 }
