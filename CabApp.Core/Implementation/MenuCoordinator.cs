@@ -1,6 +1,9 @@
 ﻿using CabApp.Core.Abstraction;
 using CabApp.Core.Implementation.MenuActions;
 using CabApp.Core.Implementation.MenuActions.Cabs;
+using CabApp.Core.Implementation.MenuActions.Cars;
+using CabApp.Core.Implementation.MenuActions.Drivers;
+using CabApp.Core.Implementation.MenuActions.Trips;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -34,7 +37,6 @@ namespace CabApp.Core.Implementation
                     var actions = GetActionsForMenu(menuType);
                     await _menuService.DisplayMenuAsync(menuType, actions);
 
-                    Console.Write("Enter your choice: ");
                     var input = Console.ReadLine();
 
                     await HandleUserInputAsync(input, actions, menuType);
@@ -75,6 +77,7 @@ namespace CabApp.Core.Implementation
                     return;
                 }
                 _ = await selectionAction.ExecuteAsync();
+                await _menuService.WaitForUserAsync();
             }
             catch(Exception ex)
             {
@@ -92,6 +95,9 @@ namespace CabApp.Core.Implementation
             {
                 "main" => CreateMainMenuAction(),
                 "cab" => CreateCabMenuAction(),
+                "car" => CreateCarMenuAction(),
+                "driver" => CreateDriverMenuAction(),
+                "trip" => CreateTripMenuAction(),
                 _ => CreateMainMenuAction(),
             };
         }
@@ -101,6 +107,9 @@ namespace CabApp.Core.Implementation
             return new List<IMenuAction>
             {
                 _serviceProvider.GetRequiredService<CabMenuAction>(),
+                _serviceProvider.GetRequiredService<CarMenuAction>(),
+                _serviceProvider.GetRequiredService<DriverMenuAction>(),
+                _serviceProvider.GetRequiredService<TripMenuAction>(),
                 _serviceProvider.GetRequiredService<ExitMenuAction>(),
             };
         }
@@ -110,6 +119,42 @@ namespace CabApp.Core.Implementation
             return new List<IMenuAction>
             {
                 _serviceProvider.GetRequiredService<ViewCabsMenuAction>(),
+                _serviceProvider.GetRequiredService<AddCabMenuAction>(),
+                _serviceProvider.GetRequiredService<UpdateCabMenuAction>(),
+                _serviceProvider.GetRequiredService<RemoveCabMenuAction>(),
+            };
+        }
+
+        private List<IMenuAction> CreateCarMenuAction()
+        {
+            return new List<IMenuAction>
+            {
+                _serviceProvider.GetRequiredService<ViewCarsMenuAction>(),
+                _serviceProvider.GetRequiredService<AddCarMenuAction>(),
+                _serviceProvider.GetRequiredService<UpdateCarMenuAction>(),
+                _serviceProvider.GetRequiredService<RemoveCarMenuAction>(),
+            };
+        }
+
+        private List<IMenuAction> CreateDriverMenuAction()
+        {
+            return new List<IMenuAction>
+            {
+                _serviceProvider.GetRequiredService<ViewDriversMenuAction>(),
+                _serviceProvider.GetRequiredService<AddDriverMenuAction>(),
+                _serviceProvider.GetRequiredService<UpdateDriverMenuAction>(),
+                _serviceProvider.GetRequiredService<RemoveDriverMenuAction>(),
+            };
+        }
+
+        private List<IMenuAction> CreateTripMenuAction()
+        {
+            return new List<IMenuAction>
+            {
+                _serviceProvider.GetRequiredService<ViewTripsMenuAction>(),
+                _serviceProvider.GetRequiredService<AddTripMenuAction>(),
+                _serviceProvider.GetRequiredService<UpdateTripMenuAction>(),
+                _serviceProvider.GetRequiredService<RemoveTripMenuAction>(),
             };
         }
 

@@ -21,7 +21,10 @@ namespace CabApp.Core.Implementation
             _appLogger = appLogger;
             _jsonOptions = new JsonSerializerOptions
             {
-                WriteIndented = true
+                WriteIndented = true,
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = null, // Keep original property names
+                Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
             };
         }
 
@@ -32,18 +35,17 @@ namespace CabApp.Core.Implementation
             {
                 string dataPath = GetFilePath(storeName);
 
-                if (!Directory.Exists(dataPath))
+                if (!File.Exists(dataPath))
+                {
                     return data;
+                }
 
                 var rawData = await File.ReadAllTextAsync(dataPath);
-                data = JsonSerializer.Deserialize<List<T>>(dataPath, _jsonOptions) ?? new List<T>();
-
-                _appLogger.LogInfo($"Data read successfully for type :{typeof(T).Name}");
-
+                data = JsonSerializer.Deserialize<List<T>>(rawData, _jsonOptions) ?? new List<T>();
             }
             catch (Exception ex)
             {
-                _appLogger.LogError("Exception occured in GetData", ex);
+                _appLogger.LogError($"Exception occurred in GetData for type {typeof(T).Name}: {ex.Message}", ex);
             }
             return data;
         }
@@ -55,15 +57,19 @@ namespace CabApp.Core.Implementation
                 string dataPath = GetFilePath(storeName);
                 string serializedData = JsonSerializer.Serialize(data, _jsonOptions);
 
-                if(string.IsNullOrWhiteSpace(serializedData))
+                if(string.IsNullOrWhiteSpace(serializedData))   
                     return;
 
+                // Ensure the directory exists before writing the file
+                string directory = Path.GetDirectoryName(dataPath) ?? string.Empty;
+                if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+
                 await File.WriteAllTextAsync(dataPath, serializedData);
-                _appLogger.LogInfo($"Data written successfully for type :{typeof(T).Name}");
             }
             catch (Exception ex)
             {
-                _appLogger.LogError($"Exception occured in WriteData :{typeof(T).Name}", ex);
+                _appLogger.LogError($"Exception occurred in WriteData for {typeof(T).Name}", ex);
             }
         }
 
@@ -75,12 +81,11 @@ namespace CabApp.Core.Implementation
                 if (File.Exists(dataPath))
                 {
                     File.Delete(dataPath);
-                    _appLogger.LogInfo($"Data cleared successfully for type :{storeName}");
                 }
             }
             catch (Exception ex)
             {
-                _appLogger.LogError($"Exception occured in ClearData :{storeName}", ex);
+                _appLogger.LogError($"Exception occurred in ClearData for {storeName}", ex);
             }
         }
 
@@ -88,6 +93,31 @@ namespace CabApp.Core.Implementation
         {
             string dataPath = Path.Combine(_directoryPath, storeName + ".json");
             return dataPath;
+        }
+
+        private string CleanJsonData(string jsonData)
+        {
+            try
+            {
+                // Remove any BOM or invisible characters
+                jsonData = jsonData.Trim('\uFEFF', '\u200B');
+                
+                // Remove any trailing commas
+                jsonData = System.Text.RegularExpressions.Regex.Replace(jsonData, @",(\s*[}\]])", "$1");
+                
+                // Ensure proper JSON array format
+                if (!jsonData.TrimStart().StartsWith("["))
+                {
+                    jsonData = "[" + jsonData + "]";
+                }
+                
+                return jsonData;
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError($"Error cleaning JSON data: {ex.Message}", ex);
+                return jsonData; // Return original if cleaning fails
+            }
         }
     }
 }

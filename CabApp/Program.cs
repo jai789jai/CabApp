@@ -8,10 +8,10 @@ try
     using var scope = host.Services.CreateScope();
 
     var services = scope.ServiceProvider;
-    services.GetRequiredService<App>().Run(args);
-
+    await services.GetRequiredService<App>().Run(args);
 
 } catch (Exception ex)
 {
-    Console.WriteLine(ex.Message);
+    Console.WriteLine($"Error: {ex.Message}");
+    Console.WriteLine($"Stack Trace: {ex.StackTrace}");
 }

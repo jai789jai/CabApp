@@ -21,18 +21,11 @@ namespace CabApp
         {
             try
             {
-                _appLogger.LogInfo("Application Started");
-                //Console.WriteLine("Hello from the other Side.");
                 await _menuCoordinator.ShowMenuAsync("main");
-
             }
             catch(Exception ex)
             {
                 _appLogger.LogError("An error occurred", ex);
-            }
-            finally
-            {
-                _appLogger.LogInfo("Application Ended");
             }
         }
     }
