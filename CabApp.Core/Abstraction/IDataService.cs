@@ -36,5 +36,12 @@ namespace CabApp.Core.Abstraction
         Task<bool> UpdateTripAsync(TripDetail trip);
         Task<bool> RemoveTripAsync(int tripId);
         Task<TripDetail?> GetTripByIdAsync(int tripId);
+        
+        // Location operations
+        Task<List<LocationDetail>> GetAllLocationsAsync();
+        Task<bool> AddLocationAsync(LocationDetail location);
+        Task<bool> UpdateLocationAsync(LocationDetail location);
+        Task<bool> RemoveLocationAsync(int locationId);
+        Task<LocationDetail?> GetLocationByIdAsync(int locationId);
     }
 }

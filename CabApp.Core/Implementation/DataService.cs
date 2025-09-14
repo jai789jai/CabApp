@@ -398,5 +398,100 @@ namespace CabApp.Core.Implementation
                 return null;
             }
         }
+
+        // Location operations
+        public async Task<List<LocationDetail>> GetAllLocationsAsync()
+        {
+            List<LocationDetail> locations = new List<LocationDetail>();
+            try
+            {
+                locations = await _dataStore.GetData<LocationDetail>("locations");
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError("Exception occurred in GetAllLocationsAsync", ex);
+            }
+            return locations;
+        }
+
+        public async Task<bool> AddLocationAsync(LocationDetail location)
+        {
+            try
+            {
+                var locations = await GetAllLocationsAsync();
+                
+                if (location.Id == 0)
+                {
+                    location.Id = locations.Count > 0 ? locations.Max(l => l.Id) + 1 : 1;
+                }
+                
+                locations.Add(location);
+                await _dataStore.WriteData(locations, "locations");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError("Exception occurred in AddLocationAsync", ex);
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateLocationAsync(LocationDetail location)
+        {
+            try
+            {
+                var locations = await GetAllLocationsAsync();
+                var existingLocation = locations.FirstOrDefault(l => l.Id == location.Id);
+                
+                if (existingLocation == null)
+                    return false;
+                
+                var index = locations.IndexOf(existingLocation);
+                locations[index] = location;
+                
+                await _dataStore.WriteData(locations, "locations");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError("Exception occurred in UpdateLocationAsync", ex);
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveLocationAsync(int locationId)
+        {
+            try
+            {
+                var locations = await GetAllLocationsAsync();
+                var locationToRemove = locations.FirstOrDefault(l => l.Id == locationId);
+                
+                if (locationToRemove == null)
+                    return false;
+                
+                locations.Remove(locationToRemove);
+                await _dataStore.WriteData(locations, "locations");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError("Exception occurred in RemoveLocationAsync", ex);
+                return false;
+            }
+        }
+
+        public async Task<LocationDetail?> GetLocationByIdAsync(int locationId)
+        {
+            try
+            {
+                var locations = await GetAllLocationsAsync();
+                return locations.FirstOrDefault(l => l.Id == locationId);
+            }
+            catch (Exception ex)
+            {
+                _appLogger.LogError("Exception occurred in GetLocationByIdAsync", ex);
+                return null;
+            }
+        }
     }
 }
