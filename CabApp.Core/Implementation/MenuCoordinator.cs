@@ -3,6 +3,7 @@ using CabApp.Core.Implementation.MenuActions;
 using CabApp.Core.Implementation.MenuActions.Cabs;
 using CabApp.Core.Implementation.MenuActions.Cars;
 using CabApp.Core.Implementation.MenuActions.Drivers;
+using CabApp.Core.Implementation.MenuActions.Locations;
 using CabApp.Core.Implementation.MenuActions.Trips;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -98,6 +99,7 @@ namespace CabApp.Core.Implementation
                 "car" => CreateCarMenuAction(),
                 "driver" => CreateDriverMenuAction(),
                 "trip" => CreateTripMenuAction(),
+                "location" => CreateLocationMenuAction(),
                 _ => CreateMainMenuAction(),
             };
         }
@@ -110,6 +112,7 @@ namespace CabApp.Core.Implementation
                 _serviceProvider.GetRequiredService<CarMenuAction>(),
                 _serviceProvider.GetRequiredService<DriverMenuAction>(),
                 _serviceProvider.GetRequiredService<TripMenuAction>(),
+                _serviceProvider.GetRequiredService<LocationMenuAction>(),
                 _serviceProvider.GetRequiredService<ExitMenuAction>(),
             };
         }
@@ -155,6 +158,17 @@ namespace CabApp.Core.Implementation
                 _serviceProvider.GetRequiredService<AddTripMenuAction>(),
                 _serviceProvider.GetRequiredService<UpdateTripMenuAction>(),
                 _serviceProvider.GetRequiredService<RemoveTripMenuAction>(),
+            };
+        }
+
+        private List<IMenuAction> CreateLocationMenuAction()
+        {
+            return new List<IMenuAction>
+            {
+                _serviceProvider.GetRequiredService<ViewLocationsMenuAction>(),
+                _serviceProvider.GetRequiredService<AddLocationMenuAction>(),
+                _serviceProvider.GetRequiredService<UpdateLocationMenuAction>(),
+                _serviceProvider.GetRequiredService<RemoveLocationMenuAction>(),
             };
         }
 

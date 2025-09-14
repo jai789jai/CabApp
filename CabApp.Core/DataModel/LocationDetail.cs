@@ -8,6 +8,7 @@ namespace CabApp.Core.DataModel
 {
     public class LocationDetail
     {
+        public int Id { get; set; }
         public string City { get; set; } = string.Empty;
         public string Country { get; set; } = string.Empty;
         public double Latitude { get; set; }    
