@@ -530,7 +530,7 @@ namespace CabApp.Core.Implementation
 
                 if (newState == WorkState.IDLE)
                 {
-                    cab.LastIdleTime = DateTime.UtcNow;
+                    cab.IdleStartTime = DateTime.UtcNow;
                     cab.CurrentTripId = null;
                 }
                 else if (newState == WorkState.ON_TRIP && oldState == WorkState.IDLE)
@@ -629,7 +629,7 @@ namespace CabApp.Core.Implementation
 
                 // Update cab status
                 cab.CurrentWorkState = WorkState.IDLE;
-                cab.LastIdleTime = DateTime.UtcNow;
+                cab.IdleStartTime = DateTime.UtcNow;
                 cab.CurrentTripId = null;
                 cab.ComppletedTrips.Add(tripId);
 

@@ -36,7 +36,7 @@ namespace CabApp.Core.Implementation.MenuActions.Locations
                 Console.WriteLine("===================================");
 
                 // Show available locations
-                Console.WriteLine("\n--- Available Locations ---");
+                Console.WriteLine("--- Available Locations ---");
                 var locations = await _dataService.GetAllLocationsAsync();
                 if (locations != null && locations.Count > 0)
                 {
@@ -51,20 +51,20 @@ namespace CabApp.Core.Implementation.MenuActions.Locations
                     return false;
                 }
 
-                Console.Write("\nEnter Location ID to remove: ");
+                Console.Write("Enter Location ID to remove: ");
                 if (int.TryParse(Console.ReadLine(), out int locationId))
                 {
                     var existingLocation = await _dataService.GetLocationByIdAsync(locationId);
                     if (existingLocation != null)
                     {
-                        Console.WriteLine($"\nLocation to be removed:");
+                        Console.WriteLine($"Location to be removed:");
                         Console.WriteLine($"ID: {existingLocation.Id}");
                         Console.WriteLine($"City: {existingLocation.City}");
                         Console.WriteLine($"Country: {existingLocation.Country}");
                         Console.WriteLine($"Latitude: {existingLocation.Latitude}");
                         Console.WriteLine($"Longitude: {existingLocation.Longitude}");
 
-                        Console.Write("\nAre you sure you want to remove this location? (y/n): ");
+                        Console.Write("Are you sure you want to remove this location? (y/n): ");
                         var confirmation = Console.ReadLine()?.ToLower();
                         
                         if (confirmation == "y" || confirmation == "yes")
@@ -74,18 +74,18 @@ namespace CabApp.Core.Implementation.MenuActions.Locations
                             
                             if (success)
                             {
-                                Console.WriteLine($"\nLocation removed successfully!");
+                                Console.WriteLine($"Location removed successfully!");
                             }
                             else
                             {
-                                Console.WriteLine("\nFailed to remove location. Please try again.");
+                                Console.WriteLine("Failed to remove location. Please try again.");
                             }
 
                             return success;
                         }
                         else
                         {
-                            Console.WriteLine("\nLocation removal cancelled.");
+                            Console.WriteLine("Location removal cancelled.");
                             return true;
                         }
                     }

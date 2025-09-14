@@ -62,11 +62,11 @@ namespace CabApp.Core.Implementation.MenuActions.Cars
                 
                 if (success)
                 {
-                    Console.WriteLine($"\nCar added successfully with ID: {car.CarId}");
+                    Console.WriteLine($"Car added successfully with ID: {car.CarId}");
                 }
                 else
                 {
-                    Console.WriteLine("\nFailed to add car. Please try again.");
+                    Console.WriteLine("Failed to add car. Please try again.");
                 }
 
                 return success;

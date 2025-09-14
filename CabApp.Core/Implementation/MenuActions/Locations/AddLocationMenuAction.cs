@@ -37,7 +37,7 @@ namespace CabApp.Core.Implementation.MenuActions.Locations
 
                 var location = new LocationDetail();
 
-                Console.Write("\nEnter City: ");
+                Console.Write("Enter City: ");
                 location.City = Console.ReadLine() ?? string.Empty;
 
                 if (string.IsNullOrWhiteSpace(location.City))
@@ -82,11 +82,11 @@ namespace CabApp.Core.Implementation.MenuActions.Locations
                 
                 if (success)
                 {
-                    Console.WriteLine($"\nLocation added successfully with ID: {location.Id}");
+                    Console.WriteLine($"Location added successfully with ID: {location.Id}");
                 }
                 else
                 {
-                    Console.WriteLine("\nFailed to add location. Please try again.");
+                    Console.WriteLine("Failed to add location. Please try again.");
                 }
 
                 return success;

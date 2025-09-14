@@ -45,13 +45,13 @@ namespace CabApp.Core.Implementation.MenuActions.Cars
                     return true;
                 }
 
-                Console.Write("\nEnter the ID of the car to remove: ");
+                Console.Write("Enter the ID of the car to remove: ");
                 if (int.TryParse(Console.ReadLine(), out int carId))
                 {
                     var carToRemove = cars.FirstOrDefault(c => c.CarId == carId);
                     if (carToRemove != null)
                     {
-                        Console.WriteLine($"\nAre you sure you want to remove car ID {carId}?");
+                        Console.WriteLine($"Are you sure you want to remove car ID {carId}?");
                         Console.WriteLine($"Manufacturer: {carToRemove.ManufactureName}");
                         Console.WriteLine($"Model: {carToRemove.ModelName}");
                         Console.Write("Type 'YES' to confirm removal: ");
@@ -62,26 +62,26 @@ namespace CabApp.Core.Implementation.MenuActions.Cars
                             bool success = await _dataService.RemoveCarAsync(carId);
                             if (success)
                             {
-                                Console.WriteLine($"\nCar with ID {carId} has been successfully removed.");
+                                Console.WriteLine($"Car with ID {carId} has been successfully removed.");
                             }
                             else
                             {
-                                Console.WriteLine($"\nFailed to remove car with ID {carId}.");
+                                Console.WriteLine($"Failed to remove car with ID {carId}.");
                             }
                         }
                         else
                         {
-                            Console.WriteLine("\nRemoval cancelled.");
+                            Console.WriteLine("Removal cancelled.");
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"\nCar with ID {carId} not found.");
+                        Console.WriteLine($"Car with ID {carId} not found.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("\nInvalid car ID entered.");
+                    Console.WriteLine("Invalid car ID entered.");
                 }
 
                 return true;

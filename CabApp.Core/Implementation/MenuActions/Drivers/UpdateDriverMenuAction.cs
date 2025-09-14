@@ -45,20 +45,20 @@ namespace CabApp.Core.Implementation.MenuActions.Drivers
                     return true;
                 }
 
-                Console.Write("\nEnter the ID of the driver to update: ");
+                Console.Write("Enter the ID of the driver to update: ");
                 if (int.TryParse(Console.ReadLine(), out int driverId))
                 {
                     var existingDriver = await _dataService.GetDriverByIdAsync(driverId);
                     if (existingDriver != null)
                     {
-                        Console.WriteLine($"\nUpdating Driver ID: {existingDriver.EmpId}");
+                        Console.WriteLine($"Updating Driver ID: {existingDriver.EmpId}");
                         Console.WriteLine("===================================");
 
-                        Console.WriteLine("\nCurrent Information:");
+                        Console.WriteLine("Current Information:");
                         Console.WriteLine($"Name: {existingDriver.FirstName} {existingDriver.LastName}");
                         Console.WriteLine($"License: {existingDriver.LicenseNumber}");
 
-                        Console.WriteLine("\n--- Update Driver Information (Press Enter to keep current value) ---");
+                        Console.WriteLine("--- Update Driver Information (Press Enter to keep current value) ---");
                         Console.Write($"First Name [{existingDriver.FirstName}]: ");
                         string input = Console.ReadLine() ?? string.Empty;
                         if (!string.IsNullOrWhiteSpace(input))
@@ -104,21 +104,21 @@ namespace CabApp.Core.Implementation.MenuActions.Drivers
                         bool success = await _dataService.UpdateDriverAsync(existingDriver);
                         if (success)
                         {
-                            Console.WriteLine($"\nDriver with ID {driverId} has been successfully updated.");
+                            Console.WriteLine($"Driver with ID {driverId} has been successfully updated.");
                         }
                         else
                         {
-                            Console.WriteLine($"\nFailed to update driver with ID {driverId}.");
+                            Console.WriteLine($"Failed to update driver with ID {driverId}.");
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"\nDriver with ID {driverId} not found.");
+                        Console.WriteLine($"Driver with ID {driverId} not found.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("\nInvalid driver ID entered.");
+                    Console.WriteLine("Invalid driver ID entered.");
                 }
 
                 return true;

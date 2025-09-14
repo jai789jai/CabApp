@@ -28,7 +28,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
         {
             try
             {
-                Console.WriteLine("\n=== Book Cab ===");
+                Console.WriteLine("=== Book Cab ===");
 
                 // Display available locations
                 var locations = await _dataService.GetAllLocationsAsync();
@@ -38,14 +38,14 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                     return false;
                 }
 
-                Console.WriteLine("\nAvailable Locations:");
+                Console.WriteLine("Available Locations:");
                 foreach (var location in locations)
                 {
                     Console.WriteLine($"ID: {location.Id}, City: {location.City}, Country: {location.Country}");
                 }
 
                 // Get from location
-                Console.Write("\nEnter From Location ID: ");
+                Console.Write("Enter From Location ID: ");
                 if (!int.TryParse(Console.ReadLine(), out int fromLocationId))
                 {
                     Console.WriteLine("Invalid from location ID.");
@@ -88,7 +88,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                     return false;
                 }
 
-                Console.WriteLine($"\nFound {availableCabs.Count} available cab(s) at {fromLocation.City}:");
+                Console.WriteLine($"Found {availableCabs.Count} available cab(s) at {fromLocation.City}:");
 
                 // Create a new trip
                 var trip = new TripDetail
@@ -110,7 +110,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 var assignedCab = await _dataService.BookCabForTripAsync(trip.Id, fromLocationId);
                 if (assignedCab != null)
                 {
-                    Console.WriteLine($"\n✅ Trip booked successfully!");
+                    Console.WriteLine($"✅ Trip booked successfully!");
                     Console.WriteLine($"Trip ID: {trip.Id}");
                     Console.WriteLine($"Assigned Cab ID: {assignedCab.Id}");
                     Console.WriteLine($"From: {fromLocation.City}");

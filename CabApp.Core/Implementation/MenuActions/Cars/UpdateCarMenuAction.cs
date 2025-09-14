@@ -45,21 +45,21 @@ namespace CabApp.Core.Implementation.MenuActions.Cars
                     return true;
                 }
 
-                Console.Write("\nEnter the ID of the car to update: ");
+                Console.Write("Enter the ID of the car to update: ");
                 if (int.TryParse(Console.ReadLine(), out int carId))
                 {
                     var existingCar = await _dataService.GetCarByIdAsync(carId);
                     if (existingCar != null)
                     {
-                        Console.WriteLine($"\nUpdating Car ID: {existingCar.CarId}");
+                        Console.WriteLine($"Updating Car ID: {existingCar.CarId}");
                         Console.WriteLine("===================================");
 
-                        Console.WriteLine("\nCurrent Information:");
+                        Console.WriteLine("Current Information:");
                         Console.WriteLine($"Manufacturer: {existingCar.ManufactureName}");
                         Console.WriteLine($"Model: {existingCar.ModelName}");
                         Console.WriteLine($"Year: {existingCar.ManfactureYear}");
 
-                        Console.WriteLine("\n--- Update Car Information (Press Enter to keep current value) ---");
+                        Console.WriteLine("--- Update Car Information (Press Enter to keep current value) ---");
                         Console.Write($"Manufacturer Name [{existingCar.ManufactureName}]: ");
                         string input = Console.ReadLine() ?? string.Empty;
                         if (!string.IsNullOrWhiteSpace(input))
@@ -98,21 +98,21 @@ namespace CabApp.Core.Implementation.MenuActions.Cars
                         bool success = await _dataService.UpdateCarAsync(existingCar);
                         if (success)
                         {
-                            Console.WriteLine($"\nCar with ID {carId} has been successfully updated.");
+                            Console.WriteLine($"Car with ID {carId} has been successfully updated.");
                         }
                         else
                         {
-                            Console.WriteLine($"\nFailed to update car with ID {carId}.");
+                            Console.WriteLine($"Failed to update car with ID {carId}.");
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"\nCar with ID {carId} not found.");
+                        Console.WriteLine($"Car with ID {carId} not found.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("\nInvalid car ID entered.");
+                    Console.WriteLine("Invalid car ID entered.");
                 }
 
                 return true;
