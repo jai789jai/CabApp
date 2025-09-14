@@ -19,10 +19,9 @@ namespace CabApp.Core.DataModel
         public LocationDetail ToLocation { get; set; } = new LocationDetail();
         public TripStatus TripStatus { get; set; }
         
-        // New properties for cab assignment and booking
-        public int? AssignedCabId { get; set; } // Null if not assigned yet
+        public int? AssignedCabId { get; set; } 
         public DateTime BookingTime { get; set; }
-        public DateTime? StartTime { get; set; } // When trip actually started
-        public DateTime? EndTime { get; set; } // When trip completed
+        public DateTime? StartTime { get; set; } 
+        public DateTime? EndTime { get; set; }
     }
 }

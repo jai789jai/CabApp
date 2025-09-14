@@ -528,7 +528,6 @@ namespace CabApp.Core.Implementation
                 var oldState = cab.CurrentWorkState;
                 cab.CurrentWorkState = newState;
 
-                // Update idle time tracking
                 if (newState == WorkState.IDLE)
                 {
                     cab.LastIdleTime = DateTime.UtcNow;
@@ -536,8 +535,7 @@ namespace CabApp.Core.Implementation
                 }
                 else if (newState == WorkState.ON_TRIP && oldState == WorkState.IDLE)
                 {
-                    // Cab is starting a trip, idle time tracking stops
-                    cab.CurrentTripId = null; // Will be set when trip is assigned
+                    cab.CurrentTripId = null;
                 }
 
                 return await UpdateCabAsync(cab);
