@@ -65,7 +65,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 var locations = await _dataService.GetAllLocationsAsync();
                 if (!locations.Any())
                 {
-                    Console.WriteLine("No locations found. Please add locations first.");
+                    Console.WriteLine("No locations found. Please add locations first through the Location Management menu.");
                     return false;
                 }
 
