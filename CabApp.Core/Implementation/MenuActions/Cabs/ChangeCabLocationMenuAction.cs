@@ -11,12 +11,14 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
     public class ChangeCabLocationMenuAction : IMenuAction
     {
         private readonly IDataService _dataService;
+        private readonly IHelper _helper;
         private readonly IAppLogger _appLogger;
 
-        public ChangeCabLocationMenuAction(IDataService dataService, IAppLogger appLogger)
+        public ChangeCabLocationMenuAction(IDataService dataService, IAppLogger appLogger, IHelper helper)
         {
             _dataService = dataService;
             _appLogger = appLogger;
+            _helper = helper;
         }
 
         public string Title => "Change Cab Location";
@@ -84,7 +86,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 }
 
                 // Change the cab location
-                var success = await _dataService.ChangeCabLocationAsync(cabId, newLocationId);
+                var success = await _helper.ChangeCabLocationAsync(cabId, newLocationId);
                 if (success)
                 {
                     var newLocation = await _dataService.GetLocationByIdAsync(newLocationId);
