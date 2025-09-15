@@ -11,12 +11,14 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
     public class CompleteTripMenuAction : IMenuAction
     {
         private readonly IDataService _dataService;
+        private readonly IHelper _helper;
         private readonly IAppLogger _appLogger;
 
-        public CompleteTripMenuAction(IDataService dataService, IAppLogger appLogger)
+        public CompleteTripMenuAction(IDataService dataService, IAppLogger appLogger, IHelper helper)
         {
             _dataService = dataService;
             _appLogger = appLogger;
+            _helper = helper;
         }
 
         public string Title => "Complete Trip";
@@ -77,7 +79,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 }
 
                 // Complete the trip
-                var success = await _dataService.CompleteTripAsync(tripId);
+                var success = await _helper.CompleteTripAsync(tripId);
                 if (success)
                 {
                     var cab = await _dataService.GetCabByIdAsync(selectedTrip.AssignedCabId.Value);

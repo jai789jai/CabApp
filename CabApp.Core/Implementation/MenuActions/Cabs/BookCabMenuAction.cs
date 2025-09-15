@@ -11,12 +11,14 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
     public class BookCabMenuAction : IMenuAction
     {
         private readonly IDataService _dataService;
+        private readonly IHelper _helper;
         private readonly IAppLogger _appLogger;
 
-        public BookCabMenuAction(IDataService dataService, IAppLogger appLogger)
+        public BookCabMenuAction(IDataService dataService, IAppLogger appLogger, IHelper helper)
         {
             _dataService = dataService;
             _appLogger = appLogger;
+            _helper = helper;
         }
 
         public string Title => "Book Cab";
@@ -81,7 +83,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 }
 
                 // Check for available cabs at the from location
-                var availableCabs = await _dataService.GetAvailableCabsAtLocationAsync(fromLocationId);
+                var availableCabs = await _helper.GetAvailableCabsAtLocationAsync(fromLocationId);
                 if (!availableCabs.Any())
                 {
                     Console.WriteLine($"No available cabs at {fromLocation.City}. Please try a different location.");
@@ -107,10 +109,10 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 }
 
                 // Book a cab for the trip
-                var assignedCab = await _dataService.BookCabForTripAsync(trip.Id, fromLocationId);
+                var assignedCab = await _helper.BookCabForTripAsync(trip.Id, fromLocationId);
                 if (assignedCab != null)
                 {
-                    Console.WriteLine($"✅ Trip booked successfully!");
+                    Console.WriteLine($"Trip booked successfully!");
                     Console.WriteLine($"Trip ID: {trip.Id}");
                     Console.WriteLine($"Assigned Cab ID: {assignedCab.Id}");
                     Console.WriteLine($"From: {fromLocation.City}");

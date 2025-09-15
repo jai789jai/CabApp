@@ -11,12 +11,14 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
     public class ChangeCabStateMenuAction : IMenuAction
     {
         private readonly IDataService _dataService;
+        private readonly IHelper _helper;
         private readonly IAppLogger _appLogger;
 
-        public ChangeCabStateMenuAction(IDataService dataService, IAppLogger appLogger)
+        public ChangeCabStateMenuAction(IDataService dataService, IAppLogger appLogger, IHelper helper)
         {
             _dataService = dataService;
             _appLogger = appLogger;
+            _helper = helper;
         }
 
         public string Title => "Change Cab State";
@@ -81,7 +83,7 @@ namespace CabApp.Core.Implementation.MenuActions.Cabs
                 var newState = states[stateChoice - 1];
 
                 // Change the cab state
-                var success = await _dataService.ChangeCabStateAsync(cabId, newState);
+                var success = await _helper.ChangeCabStateAsync(cabId, newState);
                 if (success)
                 {
                     Console.WriteLine($"Cab {cabId} state successfully changed from {selectedCab.CurrentWorkState} to {newState}.");
