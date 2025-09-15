@@ -4,6 +4,7 @@ using CabApp.Core.Implementation.MenuActions.Cabs;
 using CabApp.Core.Implementation.MenuActions.Cars;
 using CabApp.Core.Implementation.MenuActions.Drivers;
 using CabApp.Core.Implementation.MenuActions.Locations;
+using CabApp.Core.Implementation.MenuActions.Insights;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -98,6 +99,7 @@ namespace CabApp.Core.Implementation
                 "car" => CreateCarMenuAction(),
                 "driver" => CreateDriverMenuAction(),
                 "location" => CreateLocationMenuAction(),
+                "insights" => CreateInsightsMenuAction(),
                 _ => CreateMainMenuAction(),
             };
         }
@@ -110,6 +112,7 @@ namespace CabApp.Core.Implementation
                 _serviceProvider.GetRequiredService<CarMenuAction>(),
                 _serviceProvider.GetRequiredService<DriverMenuAction>(),
                 _serviceProvider.GetRequiredService<LocationMenuAction>(),
+                _serviceProvider.GetRequiredService<InsightsMenuAction>(),
                 _serviceProvider.GetRequiredService<ExitMenuAction>(),
             };
         }
@@ -159,6 +162,16 @@ namespace CabApp.Core.Implementation
                 _serviceProvider.GetRequiredService<AddLocationMenuAction>(),
                 _serviceProvider.GetRequiredService<UpdateLocationMenuAction>(),
                 _serviceProvider.GetRequiredService<RemoveLocationMenuAction>(),
+            };
+        }
+
+        private List<IMenuAction> CreateInsightsMenuAction()
+        {
+            return new List<IMenuAction>
+            {
+                _serviceProvider.GetRequiredService<CabIdleTimeMenuAction>(),
+                _serviceProvider.GetRequiredService<CabLocationHistoryMenuAction>(),
+                _serviceProvider.GetRequiredService<CabDemandAnalysisMenuAction>(),
             };
         }
 

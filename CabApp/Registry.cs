@@ -5,6 +5,7 @@ using CabApp.Core.Implementation.MenuActions.Cabs;
 using CabApp.Core.Implementation.MenuActions.Cars;
 using CabApp.Core.Implementation.MenuActions.Drivers;
 using CabApp.Core.Implementation.MenuActions.Locations;
+using CabApp.Core.Implementation.MenuActions.Insights;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -30,6 +31,7 @@ namespace CabApp
                     CarMenuRegistration(services);
                     DriverMenuRegistration(services);
                     LocationMenuRegistration(services);
+                    InsightsMenuRegistration(services);
                     services.AddSingleton<App>();
                     services.AddTransient<ExitMenuAction>();
                 });
@@ -91,6 +93,14 @@ namespace CabApp
             services.AddTransient<AddLocationMenuAction>();
             services.AddTransient<UpdateLocationMenuAction>();
             services.AddTransient<RemoveLocationMenuAction>();
+        }
+
+        private static void InsightsMenuRegistration(IServiceCollection services)
+        {
+            services.AddTransient<InsightsMenuAction>();
+            services.AddTransient<CabIdleTimeMenuAction>();
+            services.AddTransient<CabLocationHistoryMenuAction>();
+            services.AddTransient<CabDemandAnalysisMenuAction>();
         }
     }
 }
